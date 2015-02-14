@@ -61,18 +61,20 @@ void initPWM (unsigned int lpin, unsigned int rpin)
 	printf("Hello!\n\rPlease check pin 3 (P1.6) with the oscilloscope!\n\r");
 }
 
-void setPWM (unsigned int lspeed, unsigned int rspeed)
+void setPWM (double lspeed, double rspeed)
 {
 	setLeftPWM(lspeed);
 	setRightPWM(rspeed);
 }
 
-void setLeftPWM (unsigned int speed)
+void setLeftPWM (double speed)
 {
-	lpwm = lpwm>100?100:speed;
+	speed *= 100;
+	lpwm = speed>100?100:(int) speed;
 }
 
-void setRightPWM (unsigned int speed) 
+void setRightPWM (double speed)
 {
-	rpwm = rpwm>100?100:speed;
+	speed *= 100;
+	rpwm = speed>100?100:(int) speed;
 }
