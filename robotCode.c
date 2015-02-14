@@ -27,12 +27,21 @@
 #define MOTOR_L P0_5
 #define MOTOR_R P0_4
 
+//Tank circuit inputs
+#define L_TANK
+#define R_TANK
+#define PERP_TANK
+
 //Minimum signal strength from tank input (assuming 1024 bin)
 int thresh = 20;
 //Base (straight line) movement speed. Max motor speed = 1
 int baseSpeed = .8;
 //Gain for differential steering
 int p = .2
+
+int leftTankValue;
+int rightTankValue;
+int perpTankValue;
 
 void init()
 {
@@ -81,4 +90,10 @@ void waitms (unsigned int ms)
 		for (k=0; k<20; k++) Wait50us();
 }
 
+void readTank(void)
+{
+	leftTankValue = L_TANK;
+	rightTankValue = R_TANK;
+	perpTankValue = PERP_TANK;
 
+}
