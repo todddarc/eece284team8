@@ -19,6 +19,8 @@
 #define LCD_D0 P2_0
 #define CHARS_PER_LINE 16
 
+
+
 void InitPorts(void)
 {
 	P0M1=0;

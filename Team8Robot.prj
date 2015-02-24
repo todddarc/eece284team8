@@ -1,5 +1,5 @@
 <PRJ>
-     `Team8Robot.prj` `C:\Users\Todd\Documents\Team8Robot.prj`
+     `Team8Robot.prj` `C:\Users\Todd\Documents\eece284team8\Team8Robot.prj`
      `c:\crosside\examples\sdccsmall.bat` `ld "%pathne%" %obj%`
      `` ``
      `` ``
@@ -8,13 +8,38 @@
 
 Source Files
 <C>
+`robotCode.c` `C:\Users\Todd\Documents\eece284team8\robotCode.c`
+   `` ``
+   `` ``
+   `` ``
+   0
 </C>
 
 Header Files
 <H>
+`lcdControl.h` `C:\Users\Todd\Documents\eece284team8\lcdControl.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`pwmControl.h` `C:\Users\Todd\Documents\eece284team8\pwmControl.h`
+   `` ``
+   `` ``
+   `` ``
+   0
 </H>
 
 Resource Files
 <R>
+`lcdControl.c` `C:\Users\Todd\Documents\eece284team8\lcdControl.c`
+   `` ``
+   `` ``
+   `` ``
+   0
+`pwmControl.c` `C:\Users\Todd\Documents\eece284team8\pwmControl.c`
+   `` ``
+   `` ``
+   `` ``
+   0
 </R>
 

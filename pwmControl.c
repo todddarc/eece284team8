@@ -50,11 +50,11 @@ void pwmcounter (void) interrupt 1
 	TL0=TIMER0_RELOAD_VALUE%0x100;
 	TR0=1; // Start timer 0
 	if(++pwmcount>99) pwmcount=0;
-	lpin=(lpwm>pwmcount)?1:0;
-	rpin=(rpwm>pwmcount)?1:0;
+	P1_6 =(lpwm>pwmcount)?1:0;
+	P1_7=(rpwm>pwmcount)?1:0; //check this: it is a total guess
 }
 
-void initPWM (unsigned int lpin, unsigned int rpin)
+void initPWM ()
 {
 	InitSerialPort();
 	InitTimer0();

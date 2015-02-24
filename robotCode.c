@@ -32,16 +32,30 @@
 #define R_TANK
 #define PERP_TANK
 
+//Turning directions
+#define NO_TURN 0
+#define RIGHT_TURN 1
+#define LEFT_TURN 2
+
 //Minimum signal strength from tank input (assuming 1024 bin)
 int thresh = 20;
-//Base (straight line) movement speed. Max motor speed = 1
-int baseSpeed = .8;
-//Gain for differential steering
-int p = .2
 
-int leftTankValue;
-int rightTankValue;
-int perpTankValue;
+int perpThreshLow = 20;
+int perpThreshMed = 100;
+int perpThreshHigh = 500;
+//Base (straight line) movement speed. Max motor speed = 1
+double baseSpeed = .8;
+//Gain for differential steering
+double p = .2
+
+int[2] leftTankValue;
+int[2] rightTankValue;
+int[2] perpTankValue;
+//vars for turning
+int turnDirection
+int perpCount = 0;
+bool ready = true;
+
 
 void init()
 {
@@ -61,11 +75,51 @@ void int main(int argc, char const *argv[])
 	}
 	return 0;
 }
+void exicuteTurn( int turnDirection)
+{
+	if(turnDirection==LEFT_TURN)
+	{
+		//TODO:set motor speed for left turn
+	}
+	else if(turnDirection==RIGHT_TURN)
+	{
+		//TODO:set motor speed for right turn
+	}
+}
+
+void setTurn(int perpCount) { 
+	if (perpCount == 2)
+	{
+		//set turn direection to left
+		turnDirection = LEFT_TURN;
+	} 
+	else if (perpCount == 3) 
+	{
+		//set turn direction to right
+		turnDirection = RIGHT_TURN;
+	}
+}
 
 void runTrack ()
 {
 	//TODO: read leftSignal and rightSignal
-	if (leftSignal < thresh && rightSignal < thresh) {
+	readTank();
+	if (perpTankValue > perpThreshMed) 
+	{
+		if (perpTankValue > perpThreshHigh && ready) 
+		{
+			perpCount++;
+			ready = false;
+		} 
+		else 
+		{
+			ready = true;
+		}
+	} 
+		ready = false;
+		setTurn(perpCount);
+	
+	if (leftTankValue < thresh && rightTankValue < thresh) {
 		runMotorSpeed(0,0);
 	} else if (1) {
 		
@@ -90,10 +144,35 @@ void waitms (unsigned int ms)
 		for (k=0; k<20; k++) Wait50us();
 }
 
+int threshParser(int value)
+{
+	int newValue;
+	if(value>perpThreshHigh)
+	{
+		newValue=3;
+	}
+	else if(value<perpThreshHigh && value>perpThreshMed)
+	{
+		newValue=2;
+	}
+	else if(value<perpThreshMed && value>perpThreshLow)
+	{
+		newValue=1;
+	}
+	else
+	{
+		newValue=0;
+	}
+	return newValue;
+}
 void readTank(void)
 {
-	leftTankValue = L_TANK;
-	rightTankValue = R_TANK;
-	perpTankValue = PERP_TANK;
+	leftTankValue(0) =leftTankValue(1); 
+	leftTankValue(1) = L_TANK;
 
+	rightTankValue(0) = rightTankValue(1);
+	rightTankValue(1) = R_TANK;
+
+	perpTankValue(0) = perpTankValue(1);
+	perpTankValue(1) = threshParser(PERP_TANK);
 }
