@@ -9,20 +9,6 @@
 #define XTAL 7373000L
 #define BAUD 115200L
 
-// Make sure these definitions match your wiring
-#define LCD_RS P3_0
-#define LCD_RW P1_6
-#define LCD_E  P1_7
-#define LCD_D7 P2_7
-#define LCD_D6 P2_6
-#define LCD_D5 P2_5
-#define LCD_D4 P2_4
-#define LCD_D3 P2_3
-#define LCD_D2 P2_2
-#define LCD_D1 P2_1
-#define LCD_D0 P2_0
-#define CHARS_PER_LINE 16
-
 // Other non-lcd pins
 #define MOTOR_L P0_5
 #define MOTOR_R P0_4
@@ -36,9 +22,12 @@
 #define NO_TURN 0
 #define RIGHT_TURN 1
 #define LEFT_TURN 2
+#define STOP_TURN 3
 
-//Minimum signal strength from tank input (assuming 1024 bin)
-int thresh = 20;
+//wheelbase in inches
+#define WHEELBASE 5
+//max speed in inches/second
+#define SPEED_CONVERSION 10
 
 int perpThreshLow = 20;
 int perpThreshMed = 100;
@@ -46,21 +35,22 @@ int perpThreshHigh = 500;
 //Base (straight line) movement speed. Max motor speed = 1
 double baseSpeed = .8;
 //Gain for differential steering
-double p = .2
+double p = .2;
 
 int[2] leftTankValue;
 int[2] rightTankValue;
 int[2] perpTankValue;
+
 //vars for turning
-int turnDirection
+int turnDirection;
 int perpCount = 0;
-bool ready = true;
+
+bool kill = false;
 
 
 void init()
 {
-	pulse_width = 1000/pwm_frequency;
-	cycles = 1000/(read_frequency * pulse_width);
+	
 }
 
 void int main(int argc, char const *argv[])
@@ -70,61 +60,79 @@ void int main(int argc, char const *argv[])
 	initPWM();
 	init();
 	LCDprintln("Done");
-	while(1) {
+	while(!kill) {
+		LCDprintln("GOTTA GO FAST!");
 		runTrack();
 	}
+	LCDprintln("Robot is Kill");
 	return 0;
 }
-void exicuteTurn( int turnDirection)
-{
-	if(turnDirection==LEFT_TURN)
-	{
-		//TODO:set motor speed for left turn
+//turn radius given in inches
+void executeTurn( int turnDirection, double speed, double radius)
+{	
+	if (radius != 0 && speed > 1.0/(1+WHEELBASE/(2*radius))) {
+		speed = 1.0/(1+WHEELBASE/(2*radius));
 	}
-	else if(turnDirection==RIGHT_TURN)
-	{
-		//TODO:set motor speed for right turn
+
+	double speed_in = radius == 0 ? -speed : speed*(1-WHEELBASE/(2*radius));
+	double speed_out = radius == 0 ? speed : speed*(1+WHEELBASE/(2*radius));
+
+	double speed_l = 0;
+	double speed_r = 0; 
+
+	switch(turnDirection) {
+
+		case NO_TURN: 
+			speed_l = speed;
+			speed_r = speed;
+			break;
+		case LEFT_TURN: 
+			speed_l = speed_in;
+			speed_r = speed_out;
+			break;
+		case RIGHT_TURN: 
+			speed_l = speed_out;
+			speed_r = speed_in;
+			break;
+		case STOP_TURN:
+			kill = true;
+			return;
 	}
-}
+
+	setPWM(speed_l, speed_r);
+	waitms(SPEED_CONVERSION*1000*0.5*M_PI/speed);
+}	
 
 void setTurn(int perpCount) { 
-	if (perpCount == 2)
-	{
-		//set turn direection to left
-		turnDirection = LEFT_TURN;
-	} 
-	else if (perpCount == 3) 
-	{
-		//set turn direction to right
-		turnDirection = RIGHT_TURN;
-	}
+	switch(perpCount) {
+		case 2: 
+			turnDirection = LEFT_TURN;
+			break;
+		case 3: 
+			turnDirection = RIGHT_TURN;
+			break;
+		case 4: turnDirection = STOP_TURN;
+	}	
 }
 
 void runTrack ()
 {
 	//TODO: read leftSignal and rightSignal
 	readTank();
-	if (perpTankValue > perpThreshMed) 
-	{
-		if (perpTankValue > perpThreshHigh && ready) 
-		{
-			perpCount++;
-			ready = false;
-		} 
-		else 
-		{
-			ready = true;
-		}
-	} 
-		ready = false;
+	if (perpTankValue(1) == 2 && perpTankValue(0) == 3) {
+		perpCount++;
+	} else if (perpTankValue(1) == 2 && perpTankValue(0) ==1 && perpCount !=0) {
 		setTurn(perpCount);
-	
-	if (leftTankValue < thresh && rightTankValue < thresh) {
-		runMotorSpeed(0,0);
-	} else if (1) {
-		
-		(baseSpeed - (leftSignal-rightSignal)*p/1024, baseSpeed + (leftSignal-rightSignal)*p/1024);
+		executeTurn(turnDirection, baseSpeed, 3.0);
+		perpCount = 0;
+	} else if (perpTankValue(1) == 1 && perpTankValue(0) == 2 && perpCount == 1) {
+		//1 is invalid number for turn signal: 
+		//must be a wire crossing the track, not a signal from signal box
+		perpCount = 0;
 	}
+		
+		setPWM(baseSpeed - (leftTankValue(1)- rightTankValue(1))*p/1024, baseSpeed + (leftTankValue(1)- rightTankValue(1))*p/1024);
+
 
 }
 
@@ -151,11 +159,11 @@ int threshParser(int value)
 	{
 		newValue=3;
 	}
-	else if(value<perpThreshHigh && value>perpThreshMed)
+	else if(value>perpThreshMed)
 	{
 		newValue=2;
 	}
-	else if(value<perpThreshMed && value>perpThreshLow)
+	else if(value>perpThreshLow)
 	{
 		newValue=1;
 	}

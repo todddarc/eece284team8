@@ -6,17 +6,17 @@
 #define BAUD 115200L
 
 // Make sure these definitions match your wiring
-#define LCD_RS P3_0
-#define LCD_RW P1_6
-#define LCD_E  P1_7
-#define LCD_D7 P2_7
-#define LCD_D6 P2_6
-#define LCD_D5 P2_5
-#define LCD_D4 P2_4
-#define LCD_D3 P2_3
+#define LCD_RS P2_7
+#define LCD_RW P2_6
+#define LCD_E  P2_5
+#define LCD_D7 P1_4
+#define LCD_D6 P1_6
+#define LCD_D5 P1_7
+#define LCD_D4 P2_0
+#define LCD_D3 P2_1
 #define LCD_D2 P2_2
-#define LCD_D1 P2_1
-#define LCD_D0 P2_0
+#define LCD_D1 P2_3
+#define LCD_D0 P2_4
 #define CHARS_PER_LINE 16
 
 
