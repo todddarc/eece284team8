@@ -13,11 +13,6 @@
 #define MOTOR_L P0_5
 #define MOTOR_R P0_4
 
-//Tank circuit inputs
-#define L_TANK
-#define R_TANK
-#define PERP_TANK
-
 //Turning directions
 #define NO_TURN 0
 #define RIGHT_TURN 1
@@ -176,11 +171,24 @@ int threshParser(int value)
 void readTank(void)
 {
 	leftTankValue(0) =leftTankValue(1); 
-	leftTankValue(1) = L_TANK;
+	leftTankValue(1) = AD1DAT0;
 
 	rightTankValue(0) = rightTankValue(1);
-	rightTankValue(1) = R_TANK;
+	rightTankValue(1) = AD1DAT1;
 
 	perpTankValue(0) = perpTankValue(1);
-	perpTankValue(1) = threshParser(PERP_TANK);
+	perpTankValue(1) = threshParser(AD1DAT2);
+}
+
+void InitADC(void)
+{
+	// Set adc1 channel pins as input only 
+	P0M1 |= (P0M1_4 | P0M1_3 | P0M1_2 | P0M1_1);
+	P0M2 &= ~(P0M1_4 | P0M1_3 | P0M1_2 | P0M1_1);
+
+	BURST1=1; //Autoscan continuos conversion mode
+	ADMODB = CLK0; //ADC1 clock is 7.3728MHz/2
+	ADINS  = (ADI13|ADI12|ADI11|ADI10); // Select the four channels for conversion
+	ADCON1 = (ENADC1|ADCS10); //Enable the converter and start immediately
+	while((ADCI1&ADCON1)==0); //Wait for first conversion to complete
 }

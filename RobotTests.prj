@@ -1,0 +1,45 @@
+<PRJ>
+     `RobotTests.prj` `C:\Users\Todd\Documents\eece284team8\RobotTests.prj`
+     `c:\crosside\examples\sdccsmall.bat` `ld "%pathne%" %obj%`
+     `` ``
+     `` ``
+     0
+</PRJ>
+
+Source Files
+<C>
+`calibration.c` `C:\Users\Todd\Documents\eece284team8\calibration.c`
+   `` ``
+   `` ``
+   `` ``
+   0
+</C>
+
+Header Files
+<H>
+`lcdControl.h` `C:\Users\Todd\Documents\eece284team8\lcdControl.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+`pwmControl.h` `C:\Users\Todd\Documents\eece284team8\pwmControl.h`
+   `` ``
+   `` ``
+   `` ``
+   0
+</H>
+
+Resource Files
+<R>
+`lcdControl.c` `C:\Users\Todd\Documents\eece284team8\lcdControl.c`
+   `` ``
+   `` ``
+   `` ``
+   0
+`pwmControl.c` `C:\Users\Todd\Documents\eece284team8\pwmControl.c`
+   `` ``
+   `` ``
+   `` ``
+   0
+</R>
+

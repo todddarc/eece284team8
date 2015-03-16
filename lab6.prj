@@ -1,0 +1,40 @@
+<PRJ>
+     `lab6.prj` `C:\Users\Todd\Documents\eece284team8\lab6.prj`
+     `c:\crosside\examples\sdccsmall.bat` `ld "%pathne%" %obj%`
+     `` ``
+     `` ``
+     0
+</PRJ>
+
+Source Files
+<C>
+`Read_sw8.asm` `C:\Users\Todd\Downloads\Read_sw8.asm`
+   `` ``
+   `` ``
+   `` ``
+   0
+`math32test.asm` `C:\Users\Todd\Downloads\math32test.asm`
+   `` ``
+   `` ``
+   `` ``
+   0
+`math32.asm` `C:\Users\Todd\Downloads\math32.asm`
+   `` ``
+   `` ``
+   `` ``
+   0
+`lab6ToddDarcie.asm` `C:\Users\Todd\Downloads\lab6ToddDarcie.asm`
+   `` ``
+   `` ``
+   `` ``
+   0
+</C>
+
+Header Files
+<H>
+</H>
+
+Resource Files
+<R>
+</R>
+
