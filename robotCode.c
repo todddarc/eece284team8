@@ -171,13 +171,13 @@ int threshParser(int value)
 void readTank(void)
 {
 	leftTankValue(0) =leftTankValue(1); 
-	leftTankValue(1) = AD1DAT0;
+	leftTankValue(1) = AD1DAT0; //Data 0 is P0_1 left tank
 
 	rightTankValue(0) = rightTankValue(1);
-	rightTankValue(1) = AD1DAT1;
+	rightTankValue(1) = AD1DAT1; //Data 1 is P0_2 right tank
 
 	perpTankValue(0) = perpTankValue(1);
-	perpTankValue(1) = threshParser(AD1DAT2);
+	perpTankValue(1) = threshParser(AD1DAT2);//Data 2 is P0_3 perp tank
 }
 
 void InitADC(void)
