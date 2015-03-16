@@ -84,10 +84,12 @@ void executeTurn( int turnDirection, double speed, double radius)
 		case LEFT_TURN: 
 			speed_l = speed_in;
 			speed_r = speed_out;
+			LCDprintln("Turning Left");
 			break;
 		case RIGHT_TURN: 
 			speed_l = speed_out;
 			speed_r = speed_in;
+			LCDprintln("Turning Right");
 			break;
 		case STOP_TURN:
 			kill = true;
@@ -125,8 +127,8 @@ void runTrack ()
 		//must be a wire crossing the track, not a signal from signal box
 		perpCount = 0;
 	}
-		
-		setPWM(baseSpeed - (leftTankValue(1)- rightTankValue(1))*p/1024, baseSpeed + (leftTankValue(1)- rightTankValue(1))*p/1024);
+	setPWM(baseSpeed - (leftTankValue(1)- rightTankValue(1))*p/1024, baseSpeed + (leftTankValue(1)- rightTankValue(1))*p/1024);
+
 
 
 }
