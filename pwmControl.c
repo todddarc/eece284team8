@@ -70,11 +70,13 @@ void setPWM (double lspeed, double rspeed)
 void setLeftPWM (double speed)
 {
 	speed *= 100;
-	lpwm = speed>100?100:(int) speed;
+	lpwm = speed>100.0?100:(int) round(speed);
+	lpwm = lpwm < 0?0:lpwm;
 }
 
 void setRightPWM (double speed)
 {
 	speed *= 100;
-	rpwm = speed>100?100:(int) speed;
+	rpwm = speed>100.0?100:(int) round(speed);
+	lpwm = lpwm < 0?0:lpwm;
 }

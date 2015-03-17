@@ -1,5 +1,5 @@
 <PRJ>
-     `Team8Robot.prj` `C:\Users\Reily\Documents\eece284team8\Team8Robot.prj`
+     `Team8Robot.prj` `C:\Users\Todd\Documents\eece284team8\Team8Robot.prj`
      `c:\crosside\examples\sdccsmall.bat` `ld "%pathne%" %obj%`
      `` ``
      `` ``
@@ -8,7 +8,7 @@
 
 Source Files
 <C>
-`robotCode.c` `C:\Users\Reily\Documents\eece284team8\robotCode.c`
+`robotCode.c` `C:\Users\Todd\Documents\eece284team8\robotCode.c`
    `` ``
    `` ``
    `` ``
@@ -17,12 +17,12 @@ Source Files
 
 Header Files
 <H>
-`lcdControl.h` `C:\Users\Reily\Documents\eece284team8\lcdControl.h`
+`lcdControl.h` `C:\Users\Todd\Documents\eece284team8\lcdControl.h`
    `` ``
    `` ``
    `` ``
    0
-`pwmControl.h` `C:\Users\Reily\Documents\eece284team8\pwmControl.h`
+`pwmControl.h` `C:\Users\Todd\Documents\eece284team8\pwmControl.h`
    `` ``
    `` ``
    `` ``
@@ -31,12 +31,12 @@ Header Files
 
 Resource Files
 <R>
-`lcdControl.c` `C:\Users\Reily\Documents\eece284team8\lcdControl.c`
+`lcdControl.c` `C:\Users\Todd\Documents\eece284team8\lcdControl.c`
    `` ``
    `` ``
    `` ``
    0
-`pwmControl.c` `C:\Users\Reily\Documents\eece284team8\pwmControl.c`
+`pwmControl.c` `C:\Users\Todd\Documents\eece284team8\pwmControl.c`
    `` ``
    `` ``
    `` ``

@@ -65,15 +65,15 @@ void int main(int argc, char const *argv[])
 //turn radius given in inches
 void executeTurn( int turnDirection, double speed, double radius)
 {	
-	if (radius != 0 && speed > 1.0/(1+WHEELBASE/(2*radius))) {
+	if (radius != 0.0 && speed > 1.0/(1+WHEELBASE/(2*radius))) {
 		speed = 1.0/(1+WHEELBASE/(2*radius));
 	}
 
-	double speed_in = radius == 0 ? -speed : speed*(1-WHEELBASE/(2*radius));
-	double speed_out = radius == 0 ? speed : speed*(1+WHEELBASE/(2*radius));
+	double speed_in = radius == 0.0 ? -speed : speed*(1-WHEELBASE/(2*radius));
+	double speed_out = radius == 0.0 ? speed : speed*(1+WHEELBASE/(2*radius));
 
-	double speed_l = 0;
-	double speed_r = 0; 
+	double speed_l = 0.0;
+	double speed_r = 0.0; 
 
 	switch(turnDirection) {
 
@@ -97,7 +97,7 @@ void executeTurn( int turnDirection, double speed, double radius)
 	}
 
 	setPWM(speed_l, speed_r);
-	waitms(SPEED_CONVERSION*1000*0.5*M_PI/speed);
+	waitms((int) round(SPEED_CONVERSION*1000*0.5*M_PI/speed));
 }	
 
 void setTurn(int perpCount) { 
@@ -127,7 +127,7 @@ void runTrack ()
 		//must be a wire crossing the track, not a signal from signal box
 		perpCount = 0;
 	}
-	setPWM(baseSpeed - (leftTankValue(1)- rightTankValue(1))*p/1024, baseSpeed + (leftTankValue(1)- rightTankValue(1))*p/1024);
+	setPWM(baseSpeed - (leftTankValue(1)- rightTankValue(1))*p/255.0, baseSpeed + (leftTankValue(1)- rightTankValue(1))*p/255.0);
 
 
 
